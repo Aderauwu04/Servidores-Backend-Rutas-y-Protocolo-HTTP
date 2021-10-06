@@ -7,10 +7,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-var assets = require(routes/assets)
-app.uses("assets, assets")
+app.listen(8080, () => {
+    console.log("Servidor activo")
+  });
 
-var routes = require(routes/index)
-app.uses("index, index")
+var routes = require("./routes/index")
+app.use(routes)
 
 module.exports = app;
