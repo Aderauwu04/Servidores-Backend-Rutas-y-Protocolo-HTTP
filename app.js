@@ -12,6 +12,6 @@ app.listen(8080, () => {
   });
 
 var routes = require("./routes/index")
-app.use(routes)
+app.use('/Ciudad_de_Arepitas',routes)
 
 module.exports = app;
