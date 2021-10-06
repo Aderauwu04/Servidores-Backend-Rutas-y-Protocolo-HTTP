@@ -1,5 +1,3 @@
-- name: Create Issue Branch
-  uses: robvanderleek/create-issue-branch@v1.5
 on:
   issues:
     types: [ assigned ]
@@ -15,4 +13,4 @@ jobs:
       - name: Create Issue Branch
         uses: robvanderleek/create-issue-branch@main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
