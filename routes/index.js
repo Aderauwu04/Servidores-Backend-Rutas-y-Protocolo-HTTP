@@ -1,51 +1,92 @@
 var express = require('express');
-var router = express.Router()
+var router = express.Router();
 
-var casas = [
-    {
-    'pisos' : 2,
-    'ventanas' : 4
-  }
-]
-var edificios = [
+var ciudad = [
   {
-  'pisos' : 6,
-  'ventanas' : 70
+    'id': 'casas',
+    'estructuras': [
+      {
+        'id' : '1A',
+        'pisos' : 2,
+        'ventanas' : 4
+      }
+    ]
   },
   {
-    'pisos' : 3,
-    'ventanas' : 10
+    'id': 'edificios',
+    'estructuras': [
+      {
+        'id' :'2A',
+        'pisos' : 6,
+        'ventanas' : 70
+      },
+      {
+        'id': '3B',
+        'pisos' : 3,
+        'ventanas' : 10
+      }
+    ]
   }
-]
+];
 
-let ciudad = casas.length + edificios.length;
-
+/* ======= Metodos GET =======*/
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', {
-    'Tamaño' : ciudad,
-    'Casas' : casas.length,
-    'Edificios' :edificios.length
-  })
+    'Tamaño' :  ciudad.forEach(i => { return i}),
+    'Edificaciones' : edicicaciones= ciudad.filter(i => i.id).join(", ")
+  });
 });
 
-router.post('/post/query/casas', function (req, res) {
-    casas.push({'pisos':req.query.pisos, 'ventanas': req.query.ventanas})
-    res.json(casas)
-})
+/* Metodo GET para ver especificamente una estructura */
+router.get('/estructura/:id', function (req, res) {
+  const id = ciudad.filter( i => i.id === req.params.id);
+  res.json(id)
+});
 
-router.post('/post/query/edificios', function (req, res) {
-  edificios.push({'pisos':req.query.pisos, 'ventanas':req.query.ventanas})
-  res.json(edificios)
-})
+/* ======= Metodos POST =======*/
+/* Metodos POST por query */
+/* ejemplo; http://localhost:8080/query/casas?id=2A&pisos=1&ventanas=6 */
+router.post('/query/:id', function (req, res) {
+  ciudad.forEach(i => {
+    if (req.params.id === i.id) {
+      i.estructuras.push(req.query)
+      res.json(i.estructuras)
+    }
+  });
+});
 
-router.get('/casas', function (req, res) {
-  res.json(casas)
-})
-router.get('/edificios', function (req, res) {
-  res.json(edificios)
-})
+/* Metodo POST usando Body */
+router.post('/body/:id', function (req, res) {
+  ciudad.forEach(i => {
+    if (req.params.id === i.id) {
+      i.estructuras.push(req.body)
+      res.json(i.estructuras)
+    }
+  });
+});
 
-console.log("Tamaño total = ", ciudad, ". Casas = ", casas, ". Edificios = ", edificios)
+/* Metodo POST para añadir una estructura en la ciudad */
+router.post('/ciudad/:id', function (req, res) {
+  ciudad.push({'id': req.params.id, 'estructuras': [] })
+  res.json(ciudad)
+});
+
+/* ======= Metodos DELETE =======*/
+/* Borrar el ultimo item */
+router.delete('/delete/item/:id', function (req, res) {
+  ciudad.forEach(i => {
+    if (req.params.id === i.id) {
+      i.estructuras.pop()
+      res.status(200)
+      res.send("Se ha eliminado el ultimo item de "+ req.params.id+" puede rectificar al ir a /estructura/"+req.params.id+" con el metodo GET")
+    }
+  });
+});
+/* Borrar el ultimo item */
+
+
+/* ======= Metodos DELETE =======*/
+
 
 module.exports = router;
