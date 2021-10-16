@@ -4,6 +4,6 @@ El servidor debe administrar internamente la estructura de una ciudad. Los contr
 
 # Ejecución
 
-node app.js
+npm i
 
-npm start
+node app.js o npm start
