@@ -60,13 +60,26 @@ function eliminar(ciudad, id, itemid) {
       }
     }
   }
-}
+};
+
+function contador(ciudad) {
+  let a = 0
+  ciudad.forEach(i => {
+    if (i.estructuras.length > 0) {
+      i.estructuras.forEach(j => {
+        a++
+      })
+    }
+  })
+  return a
+};
 
 /* ======= Metodos GET =======*/
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', {
     'TotalE' :  ciudad.length,
+    'Total' : contador(ciudad)
   });
 });
 
