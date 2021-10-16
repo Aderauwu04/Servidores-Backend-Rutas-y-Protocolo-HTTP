@@ -12,5 +12,5 @@ npm install
 node app.js
 ```
 ```
-snpm start
+npm start
 ```
