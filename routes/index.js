@@ -95,7 +95,7 @@ router.get('/ciudad', function (req, res) {
 
 /* ======= Metodos POST =======*/
 /* Metodos POST para un item de estructura por query */
-/* ejemplo; http://localhost:8080/query/casas?id=2A&pisos=1&ventanas=6 */
+/* ejemplo; localhost:8080/query/item/edificios?id=4B&pisos=9&ventanas=4 */
 router.post('/query/item/:id',
   function (req, res, next) {
     ciudad.forEach(i => {
@@ -146,7 +146,7 @@ router.post('/ciudad/:id', function (req, res) {
   es necesario el params con el id del tipo de estructura
   que se desea eliminar, y el params para especificar que
   estructura por id se va a eliminar
-  ejemplo; http://localhost:8080/delete/item/casas/1A*/
+  ejemplo; localhost:8080/delete/item/casas/1A*/
 router.delete('/delete/item/:id/:itemid',
   function (req, res, next) {
     eliminar(ciudad, req.params.id, req.params.itemid)
